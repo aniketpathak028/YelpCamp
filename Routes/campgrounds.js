@@ -1,10 +1,15 @@
 const express = require('express');
 const router = express.Router();
+
+// import models
 const Campground = require("../models/campground");
+
+// import utilities
 const ExpressError = require("../utilities/ExpressError");
 const catchAsync = require("../utilities/catchAsync");
-const { campgroundSchema } = require("../schemas");
 
+// import Joi validation schema
+const { campgroundSchema } = require("../schemas");
 const validateCampground = (req, res, next) => {
   const { error } = campgroundSchema.validate(req.body);
   if (error) {
@@ -15,6 +20,7 @@ const validateCampground = (req, res, next) => {
   }
 };
 
+// routes
 router.get(
   "/",
   catchAsync(async (req, res) => {
