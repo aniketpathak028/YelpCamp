@@ -34,6 +34,7 @@ app.use(
   })
 );
 app.use(methodOverride("_method"));
+app.use(express.static(path.join(__dirname, 'public')));
 
 // routes
 app.get("/", (req, res) => {

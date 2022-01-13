@@ -1,3 +1,4 @@
+// Joi schemas for data validation on form submission
 const Joi = require('joi');
 
 module.exports.campgroundSchema = Joi.object({
