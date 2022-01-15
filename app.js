@@ -5,6 +5,7 @@ const ejsMate = require("ejs-mate");
 const session = require("express-session");
 const methodOverride = require("method-override");
 const mongoose = require("mongoose");
+const flash = require('connect-flash');
 
 // import custom error class
 const ExpressError = require("./utilities/ExpressError");
@@ -49,6 +50,15 @@ const sessionConfig = {
   }
 };
 app.use(session(sessionConfig));
+
+// flash
+app.use(flash());
+// flash middleware to make messages locally available to views for rendering
+app.use((req, res, next) => {
+  res.locals.success = req.flash('success');
+  res.locals.error = req.flash("error");
+  next();
+})
 
 // routes
 app.get("/", (req, res) => {
