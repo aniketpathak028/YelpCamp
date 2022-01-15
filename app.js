@@ -2,6 +2,7 @@
 const express = require("express");
 const path = require("path");
 const ejsMate = require("ejs-mate");
+const session = require("express-session");
 const methodOverride = require("method-override");
 const mongoose = require("mongoose");
 
@@ -34,7 +35,20 @@ app.use(
   })
 );
 app.use(methodOverride("_method"));
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, "public")));
+
+// express-session
+const sessionConfig = {
+  secret: "yelpcamp",
+  resave: false,
+  saveUninitialized: true,
+  cookie: {
+    httpOnly: true,
+    expires: Date.now() + 1000 * 60 * 60 * 24 * 7,
+    maxAge: 1000 * 60 * 60 * 24 * 7,
+  }
+};
+app.use(session(sessionConfig));
 
 // routes
 app.get("/", (req, res) => {
