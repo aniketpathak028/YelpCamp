@@ -1,4 +1,5 @@
 const Campground = require("./models/campground");
+const Review = require('./models/review');
 
 // middleware to ensure user is logged in
 module.exports.isLoggedIn = (req, res, next) => {
@@ -14,7 +15,18 @@ module.exports.isAuthor = async(req, res, next) => {
   const campground = await Campground.findById(id);
   if (!campground.author.equals(req.user._id)) {
     req.flash('error', 'Sorry! You do not have permission to do that :(');
-    res.redirect(req.session.redirectTo ? req.session.redirectTo : '/campgrounds');
+    return res.redirect(req.session.redirectTo ? req.session.redirectTo : '/campgrounds');
   }
   next();
 }
+
+module.exports.isReviewAuthor = async (req, res, next) => {
+  const { id, reviewId } = req.params;
+  const campground = await Campground.findById(id);
+  const review = await Review.findById(reviewId);
+  if (!review.author.equals(req.user._id)) {
+    req.flash("error", "Sorry! You do not have permission to do that :(");
+    return res.redirect(`/campgrounds/${campground._id}`);
+  }
+  next();
+};

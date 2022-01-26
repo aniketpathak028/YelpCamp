@@ -10,7 +10,7 @@ const ExpressError = require("../utilities/ExpressError");
 const catchAsync = require("../utilities/catchAsync");
 
 // import middleware
-const {isLoggedIn} = require('../middleware');
+const {isLoggedIn, isReviewAuthor} = require('../middleware');
 
 // import Joi validation schema
 const { reviewSchema } = require("../schemas");
@@ -45,6 +45,7 @@ router.post(
 router.delete(
   "/:reviewId",
   isLoggedIn,
+  isReviewAuthor,
   catchAsync(async (req, res) => {
     const { id, reviewId } = req.params;
     await Campground.findByIdAndUpdate(id, { $pull: { reviews: reviewId } });
