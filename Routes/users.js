@@ -25,13 +25,26 @@ router.post(
   })
 );
 
-router.get('/login', (req, res) => {
-  res.render('users/login');
-})
+router.get("/login", (req, res) => {
+  res.render("users/login");
+});
 
-router.post('/login', passport.authenticate('local', {failureFlash: true, failureRedirect: '/login'}), async(req, res) => {
-  req.flash('success', 'Welcome back to YelpCamp!');
-  res.redirect('/campgrounds');
-})
+router.post(
+  "/login",
+  passport.authenticate("local", {
+    failureFlash: true,
+    failureRedirect: "/login",
+  }),
+  async (req, res) => {
+    req.flash("success", "Welcome back to YelpCamp!");
+    res.redirect("/campgrounds");
+  }
+);
+
+router.get("/logout", (req, res) => {
+  req.logout();
+  req.flash("success", "GoodBye!");
+  res.redirect("/campgrounds");
+});
 
 module.exports = router;
