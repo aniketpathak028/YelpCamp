@@ -6,9 +6,9 @@ const session = require("express-session");
 const methodOverride = require("method-override");
 const mongoose = require("mongoose");
 const flash = require("connect-flash");
-const passport = require('passport');
-const LocalStrategy = require('passport-local');
-const User = require('./models/user');
+const passport = require("passport");
+const LocalStrategy = require("passport-local");
+const User = require("./models/user");
 
 // import custom error class
 const ExpressError = require("./utilities/ExpressError");
@@ -16,7 +16,7 @@ const ExpressError = require("./utilities/ExpressError");
 // import routes
 const campgroundRoutes = require("./Routes/campgrounds");
 const reviewRoutes = require("./Routes/reviews");
-const userRoutes = require('./Routes/users');
+const userRoutes = require("./Routes/users");
 
 // connect to mongoose
 mongoose
@@ -58,14 +58,15 @@ app.use(session(sessionConfig));
 // middlewares for passport
 app.use(passport.initialize()); // initializes passport in the app
 app.use(passport.session()); //always use it after using sessions in the app
-passport.use(new LocalStrategy(User.authenticate())); 
+passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser()); // for serializing in session (ie. adding to the session)
-passport.deserializeUser(User.deserializeUser()) // for deserializing from session
+passport.deserializeUser(User.deserializeUser()); // for deserializing from session
 
 // flash
 app.use(flash());
 // flash middleware to make messages locally available to views for rendering
 app.use((req, res, next) => {
+  res.locals.currentUser = req.user; // making currentUser available to all templates
   res.locals.success = req.flash("success");
   res.locals.error = req.flash("error");
   next();
@@ -77,7 +78,7 @@ app.get("/", (req, res) => {
 });
 app.use("/campgrounds", campgroundRoutes);
 app.use("/campgrounds/:id/reviews", reviewRoutes);
-app.use('/', userRoutes)
+app.use("/", userRoutes);
 
 // if no routes are matched, the req lands here
 app.all("*", (req, res, next) => {
