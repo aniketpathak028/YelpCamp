@@ -9,6 +9,9 @@ const Review = require("../models/review");
 const ExpressError = require("../utilities/ExpressError");
 const catchAsync = require("../utilities/catchAsync");
 
+// import middleware
+const {isLoggedIn} = require('../middleware');
+
 // import Joi validation schema
 const { reviewSchema } = require("../schemas");
 const validateReview = (req, res, next) => {
@@ -24,11 +27,13 @@ const validateReview = (req, res, next) => {
 // routes
 router.post(
   "/",
+  isLoggedIn,
   validateReview,
   catchAsync(async (req, res) => {
     const { id } = req.params;
     const campground = await Campground.findById(id);
     const review = new Review({ ...req.body.review });
+    review.author = req.user._id;
     campground.reviews.push(review);
     await campground.save();
     await review.save();
@@ -39,6 +44,7 @@ router.post(
 
 router.delete(
   "/:reviewId",
+  isLoggedIn,
   catchAsync(async (req, res) => {
     const { id, reviewId } = req.params;
     await Campground.findByIdAndUpdate(id, { $pull: { reviews: reviewId } });

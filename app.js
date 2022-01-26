@@ -66,6 +66,9 @@ passport.deserializeUser(User.deserializeUser()); // for deserializing from sess
 app.use(flash());
 // flash middleware to make messages locally available to views for rendering
 app.use((req, res, next) => {
+  if (!['/login', '/'].includes(req.originalUrl)) {
+    req.session.redirectTo = req.originalUrl;
+  }
   res.locals.currentUser = req.user; // making currentUser available to all templates
   res.locals.success = req.flash("success");
   res.locals.error = req.flash("error");
