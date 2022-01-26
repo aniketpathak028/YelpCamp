@@ -59,7 +59,7 @@ app.use(session(sessionConfig));
 app.use(passport.initialize()); // initializes passport in the app
 app.use(passport.session()); //always use it after using sessions in the app
 passport.use(new LocalStrategy(User.authenticate())); 
-passport.serializeUser(User.serializeUser()); // for serializing in session
+passport.serializeUser(User.serializeUser()); // for serializing in session (ie. adding to the session)
 passport.deserializeUser(User.deserializeUser()) // for deserializing from session
 
 // flash
@@ -70,12 +70,6 @@ app.use((req, res, next) => {
   res.locals.error = req.flash("error");
   next();
 });
-
-app.get('/fakeUser', async (req, res) => {
-  const user = new User({ email: 'aniketpathdfdsfs@gmail.com', username: 'dsfsdfsfs' });
-  const newUser = await User.register(user, 'chicken');
-  res.send(newUser);
-})
 
 // routes
 app.get("/", (req, res) => {
