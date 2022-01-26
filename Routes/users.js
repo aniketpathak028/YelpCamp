@@ -40,7 +40,9 @@ router.post(
   }),
   async (req, res) => {
     req.flash("success", "Welcome back to YelpCamp!");
-    res.redirect("/campgrounds");
+    const redirectUrl = req.session.redirectTo || "/campgrounds";
+    delete req.session.redirectTo;
+    res.redirect(redirectUrl);
   }
 );
 

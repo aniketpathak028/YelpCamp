@@ -11,14 +11,16 @@
                 <a class="nav-link" href="/campgrounds">Campgrounds</a>
                 <a class="nav-link" href="/campgrounds/new">New Campground</a>
             </div>
-            <div class="ml-auto navbar-nav">
-                <% if(!currentUser){ %> 
-                <a class="nav-link" href="/register">Register</a>
-                <a class="nav-link" href="/login">Login</a>
-                <% } else { %> 
-                <a class="nav-link" href="/logout">Logout</a>
-                <% } %> 
-            </div>
         </div>
+        <form class="d-flex">
+            <div class="ml-auto navbar-nav">
+                <% if(!currentUser){ %>
+                    <a class="nav-link" href="/register">Register</a>
+                    <a class="nav-link" href="/login">Login</a>
+                    <% } else { %>
+                        <a class="nav-link" href="/logout">Logout</a>
+                        <% } %>
+            </div>
+        </form>
     </div>
 </nav>
