@@ -1,1 +1,1 @@
-# YelpCamp 2022
+# YelpCamp
