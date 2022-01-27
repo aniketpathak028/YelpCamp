@@ -10,7 +10,10 @@ const ExpressError = require("../utilities/ExpressError");
 const catchAsync = require("../utilities/catchAsync");
 
 // import middleware
-const {isLoggedIn, isReviewAuthor} = require('../middleware');
+const { isLoggedIn, isReviewAuthor } = require("../middleware");
+
+// import controllers
+const reviews = require("../controllers/reviews");
 
 // import Joi validation schema
 const { reviewSchema } = require("../schemas");
@@ -25,34 +28,13 @@ const validateReview = (req, res, next) => {
 };
 
 // routes
-router.post(
-  "/",
-  isLoggedIn,
-  validateReview,
-  catchAsync(async (req, res) => {
-    const { id } = req.params;
-    const campground = await Campground.findById(id);
-    const review = new Review({ ...req.body.review });
-    review.author = req.user._id;
-    campground.reviews.push(review);
-    await campground.save();
-    await review.save();
-    req.flash("success", "Successfully added your review!");
-    res.redirect(`/campgrounds/${id}`);
-  })
-);
+router.post("/", isLoggedIn, validateReview, catchAsync(reviews.createReview));
 
 router.delete(
   "/:reviewId",
   isLoggedIn,
   isReviewAuthor,
-  catchAsync(async (req, res) => {
-    const { id, reviewId } = req.params;
-    await Campground.findByIdAndUpdate(id, { $pull: { reviews: reviewId } });
-    await Review.findByIdAndDelete(reviewId);
-    req.flash("success", "Successfully deleted your review!");
-    res.redirect(`/campgrounds/${id}`);
-  })
+  catchAsync(reviews.deleteReview)
 );
 
 module.exports = router;
