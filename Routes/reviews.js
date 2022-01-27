@@ -1,10 +1,6 @@
 const express = require("express");
 const router = express.Router({ mergeParams: true }); // mergeParams provides access to query params outside routes
 
-// import models
-const Campground = require("../models/campground");
-const Review = require("../models/review");
-
 // import utilities
 const ExpressError = require("../utilities/ExpressError");
 const catchAsync = require("../utilities/catchAsync");
