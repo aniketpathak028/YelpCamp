@@ -1,5 +1,7 @@
 const express = require("express");
 const router = express.Router();
+const multer = require("multer");
+const upload = multer({ dest: "uploads/" });
 
 // import utilities
 const ExpressError = require("../utilities/ExpressError");
@@ -26,11 +28,15 @@ const validateCampground = (req, res, next) => {
 // routes
 router.route("/")
   .get(catchAsync(campgrounds.index))
-  .post(
-    validateCampground,
-    isLoggedIn,
-    catchAsync(campgrounds.createCampground)
-  );
+  .post(upload.array('image'), (req, res) => {
+    console.log(req.body, req.files);
+    res.send('it worked!');
+  })
+  // .post(
+  //   validateCampground,
+  //   isLoggedIn,
+  //   catchAsync(campgrounds.createCampground)
+  // );
 
 router.get("/new", isLoggedIn, campgrounds.renderNewForm);
 

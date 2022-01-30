@@ -1,3 +1,8 @@
+// requiring .env file incase at development
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config();
+}
+
 // import packages
 const express = require("express");
 const path = require("path");
