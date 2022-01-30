@@ -27,17 +27,15 @@ const validateCampground = (req, res, next) => {
 };
 
 // routes
-router.route("/")
+router
+  .route("/")
   .get(catchAsync(campgrounds.index))
-  .post(upload.array('image'), (req, res) => {
-    console.log(req.body, req.files);
-    res.send('it worked!');
-  })
-  // .post(
-  //   validateCampground,
-  //   isLoggedIn,
-  //   catchAsync(campgrounds.createCampground)
-  // );
+  .post(
+    isLoggedIn,
+    upload.array("image"),
+    validateCampground,
+    catchAsync(campgrounds.createCampground)
+  );
 
 router.get("/new", isLoggedIn, campgrounds.renderNewForm);
 
