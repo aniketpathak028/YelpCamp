@@ -10,6 +10,7 @@ module.exports.isLoggedIn = (req, res, next) => {
   next();
 };
 
+// middleware to ensure the request is sent by the author
 module.exports.isAuthor = async(req, res, next) => {
   const { id } = req.params;
   const campground = await Campground.findById(id);
@@ -20,6 +21,7 @@ module.exports.isAuthor = async(req, res, next) => {
   next();
 }
 
+// middleware to ensure the create review request is sent by the author
 module.exports.isReviewAuthor = async (req, res, next) => {
   const { id, reviewId } = req.params;
   const campground = await Campground.findById(id);
