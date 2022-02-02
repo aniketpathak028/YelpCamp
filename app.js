@@ -23,6 +23,9 @@ const campgroundRoutes = require("./Routes/campgrounds");
 const reviewRoutes = require("./Routes/reviews");
 const userRoutes = require("./Routes/users");
 
+// import express-mongo-sanitize
+const mongoSanitize = require("express-mongo-sanitize");
+
 // connect to mongoose
 mongoose
   .connect("mongodb://localhost:27017/yelp-camp")
@@ -46,6 +49,13 @@ app.use(
 );
 app.use(methodOverride("_method"));
 app.use(express.static(path.join(__dirname, "public")));
+
+// mongo sanitize config
+app.use(
+  mongoSanitize({
+    replaceWith: "_",
+  })
+);
 
 // express-session
 const sessionConfig = {
