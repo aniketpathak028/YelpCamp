@@ -1,5 +1,4 @@
 // Joi schemas for data validation on form submission
-const Joi = require('joi');
 const BaseJoi = require("joi");
 const sanitizeHtml = require("sanitize-html");
 

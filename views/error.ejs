@@ -4,6 +4,9 @@
         <div class="alert alert-danger d-flex-row" role="alert">
             <h1 class="text-center">ERROR :(</h1>
             <h4 class="alert-heading text-center"><%= err.message %> </h4>
+            <% if (process.env.NODE_ENV !== 'production') { %> 
+                <p><%= err.stack %> </p>
+                <% } %> 
         </div>
     </div>
 </div>
