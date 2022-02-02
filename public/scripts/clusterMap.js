@@ -8,6 +8,13 @@ const map = new mapboxgl.Map({
 });
 
 console.log(cmpgrnds);
+for (c of cmpgrnds.features) {
+  c.properties = {
+    name: c.title,
+    link: `/campgrounds/${c._id}`,
+    location: c.location
+  }
+}
 
 map.on("load", () => {
   // Add a new source from our GeoJSON data and
@@ -108,7 +115,9 @@ map.on("load", () => {
 
     new mapboxgl.Popup()
       .setLngLat(coordinates)
-      .setHTML(`magnitude: ${mag}<br>Was there a tsunami?: ${tsunami}`)
+      .setHTML(
+        `<h5><a href=${e.features[0].properties.link}>${e.features[0].properties.name}</a></h5><b><p>${e.features[0].properties.location}</b></p>`
+      )
       .addTo(map);
   });
 

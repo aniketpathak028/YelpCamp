@@ -31,5 +31,7 @@
             </div>
         </div>
         <%}%>
-            <script> const cmpgrnds = {features: <%-JSON.stringify(campgrounds)%>}; </script>
+            <script> 
+            const cmpgrnds = {features: <%- JSON.stringify(campgrounds) %>};
+            </script>
             <script src="/scripts/clusterMap.js"></script>
