@@ -113,8 +113,8 @@
         </div>
 
         <script>
-            const lon = `<%=campground.geography.coordinates[0]%>`
-            const lat = `<%=campground.geography.coordinates[1]%>`
+            const lon = `<%=campground.geometry.coordinates[0]%>`
+            const lat = `<%=campground.geometry.coordinates[1]%>`
             mapboxgl.accessToken = 'pk.eyJ1IjoiZnV0dXJlZGV2ZWxvcGVyIiwiYSI6ImNrejJuejB1MDFyeW0ydXF2dm5jdmZ1dmsifQ.qZloJjJreywgYHAovKC5ag';
             const map = new mapboxgl.Map({
                 container: 'map', // container ID
