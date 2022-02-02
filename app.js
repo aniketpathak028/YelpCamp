@@ -14,6 +14,7 @@ const flash = require("connect-flash");
 const passport = require("passport");
 const LocalStrategy = require("passport-local");
 const User = require("./models/user");
+const helmet = require('helmet');
 
 // import custom error class
 const ExpressError = require("./utilities/ExpressError");
@@ -54,6 +55,13 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use(
   mongoSanitize({
     replaceWith: "_",
+  })
+);
+
+// using helmet
+app.use(
+  helmet({
+    contentSecurityPolicy: false,
   })
 );
 
