@@ -55,7 +55,7 @@
                 </div>
             </div>
             <div class="col-6">
-                <div id='map' style='width:520px; height: 200px; border: 2px solid black;'></div>
+                <div id='map'></div>
                 <% if(currentUser) { %>
                     <h2>Leave a Review</h2>
                     <form action="/campgrounds/<%=campground._id%>/reviews" novalidate method="POST"
@@ -122,5 +122,6 @@
                 center: [lon, lat], // starting position [lng, lat]
                 zoom: 7 // starting zoom
             });
+            map.addControl(new mapboxgl.NavigationControl());
             new mapboxgl.Marker().setLngLat([lon, lat]).setPopup(new mapboxgl.Popup({ offset: 10 }).setHTML(`<h5><%=campground.title%></h5><span><%=campground.location%></span>`)).addTo(map);
         </script>

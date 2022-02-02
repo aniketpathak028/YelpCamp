@@ -1,11 +1,12 @@
 mapboxgl.accessToken =
   "pk.eyJ1IjoiZnV0dXJlZGV2ZWxvcGVyIiwiYSI6ImNrejJuejB1MDFyeW0ydXF2dm5jdmZ1dmsifQ.qZloJjJreywgYHAovKC5ag";
 const map = new mapboxgl.Map({
-  container: "map",
+  container: "cluster-map",
   style: "mapbox://styles/mapbox/light-v10",
   center: [-103.5917, 40.6699],
   zoom: 3,
 });
+map.addControl(new mapboxgl.NavigationControl());
 
 console.log(cmpgrnds);
 for (c of cmpgrnds.features) {
